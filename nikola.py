@@ -8,20 +8,27 @@ from datetime import datetime
 import time # Librería para hacer que el programa que controla el bot no se acabe.
 from modules.uptime import uptime_string
 from modules.uptime import logs_size
+
+# Librería de acciones en el sistema
+import sys
+
 # Importamos el TOKEN y USERS desde settings
 from settings import TOKEN
 from settings import USERS
 from settings import LOGDIR
 from settings import LOGFILE
 from settings import path
+
 #Modulo EMT VLC
-from modules.emtVlc import prime_buses
+## from modules.emtVlc import prime_buses
 
 bot = telebot.TeleBot(TOKEN) # Creamos el objeto del bot.
 print("Bot iniciado y listo para servir:")
+
 ############ VARS #######################
 start_time = time.time()
 last_error_time = None
+
 #########################################
 ############ LISTENER ###################
 # Con esto, estamos definiendo una función llamada 'listener', que recibe como
@@ -32,9 +39,11 @@ def listener(messages):
             cid = m.chat.id # Almacenaremos el ID de la conversación.
             now = datetime.now().strftime("%Y-%m-%d %H:%M")
             if cid > 0:
+                
                 # Si 'cid' es positivo, usaremos 'm.chat.first_name' para el nombre.
                 mensaje = "[" + now + "]: " + str(m.chat.first_name) + "(" + str(cid) + "): " + m.text
             else:
+                
                 # Si 'cid' es negativo, usaremos 'm.from_user.first_name' para el nombre.
                 mensaje = "[" + now + "]: " + str(m.from_user.first_name) + "(" + str(cid) + "): " + m.text
             f = open( LOGDIR + LOGFILE, 'a') # Abrimos nuestro fichero log en modo 'Añadir'.
@@ -45,6 +54,7 @@ def listener(messages):
 
 # Ejecutamos funcion que "escucha" los mensajes
 bot.set_update_listener(listener)
+
 #########################################
 ############ FUNCIONES ##################
 ##### Comandos publicos #####
@@ -92,6 +102,15 @@ def command_logsize(m):
         bot.send_chat_action(cid, "typing")
         message = logs_size(path)
         bot.send_message(cid, message)
+
+# Detiene el bot
+@bot.message_handler(commands=['stop'])
+def command_stop(m):
+    cid = m.chat.id
+    bot.send_message(cid, "One more time, bye!")
+    sys.exit()
+
+
 
 
 #########################################
