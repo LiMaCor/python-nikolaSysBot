@@ -19,9 +19,6 @@ from settings import LOGDIR
 from settings import LOGFILE
 from settings import path
 
-#Modulo EMT VLC
-## from modules.emtVlc import prime_buses
-
 bot = telebot.TeleBot(TOKEN) # Creamos el objeto del bot.
 print("Bot iniciado y listo para servir:")
 
@@ -38,12 +35,10 @@ def listener(messages):
         if m.content_type == 'text': # Filtramos mensajes que sean tipo texto.
             cid = m.chat.id # Almacenaremos el ID de la conversación.
             now = datetime.now().strftime("%Y-%m-%d %H:%M")
-            if cid > 0:
-                
+            if cid > 0:              
                 # Si 'cid' es positivo, usaremos 'm.chat.first_name' para el nombre.
                 mensaje = "[" + now + "]: " + str(m.chat.first_name) + "(" + str(cid) + "): " + m.text
-            else:
-                
+            else:            
                 # Si 'cid' es negativo, usaremos 'm.from_user.first_name' para el nombre.
                 mensaje = "[" + now + "]: " + str(m.from_user.first_name) + "(" + str(cid) + "): " + m.text
             f = open( LOGDIR + LOGFILE, 'a') # Abrimos nuestro fichero log en modo 'Añadir'.
@@ -107,8 +102,11 @@ def command_logsize(m):
 @bot.message_handler(commands=['stop'])
 def command_stop(m):
     cid = m.chat.id
-    bot.send_message(cid, "One more time, bye!")
-    sys.exit()
+    if not str(cid) in USERS:
+        bot.send_message( cid, "Permiso denegado")
+    else:
+        bot.send_message(cid, "One more time, bye!")
+        sys.exit()
 
 
 
