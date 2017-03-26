@@ -7,4 +7,4 @@ LOGDIR = ""
 LOGFILE = "nikola.log"
 
 # Directorio donde se encuentra el bot (para la funcion uptime.log_size)
-path = ""
+PATH = ""
