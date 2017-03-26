@@ -18,7 +18,7 @@ from settings import TOKEN
 from settings import USERS
 from settings import LOGDIR
 from settings import LOGFILE
-from settings import path
+from settings import PATH
 
 bot = telebot.TeleBot(TOKEN) # Creamos el objeto del bot.
 print("Bot iniciado y listo para servir:")
