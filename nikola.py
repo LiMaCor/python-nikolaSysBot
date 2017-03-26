@@ -9,8 +9,9 @@ import time # Librería para hacer que el programa que controla el bot no se aca
 from modules.uptime import uptime_string
 from modules.uptime import logs_size
 
-# Librería de acciones en el sistema
+# Librerías de acciones en el sistema
 import sys
+import subprocess
 
 # Importamos el TOKEN y USERS desde settings
 from settings import TOKEN
@@ -107,6 +108,24 @@ def command_stop(m):
     else:
         bot.send_message(cid, "One more time, bye!")
         sys.exit()
+
+# Reinicia el bot
+@bot.message_handler(commands=['re_bot'])
+def command_rebot(m):
+    chatID = m.chat.id
+    if not str(chatID) in USERS:
+        bot.send_message(chatID, "Permiso denegado")
+    else:
+        bot.send_message(chatID, "Reiniciando . . .")
+        proceso = subprocess.Popen(['./script_rebot'])
+
+        proceso
+        bot.send_chat_action(chatID, "typing")
+        bot.send_message(chatID, "¡Reiniciado!")
+        sys.exit()
+
+
+
 
 
 
