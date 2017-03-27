@@ -18,7 +18,7 @@ from settings import TOKEN
 from settings import USERS
 from settings import LOGDIR
 from settings import LOGFILE
-from settings import path
+from settings import PATH
 
 bot = telebot.TeleBot(TOKEN) # Creamos el objeto del bot.
 print("Bot iniciado y listo para servir:")
@@ -36,10 +36,10 @@ def listener(messages):
         if m.content_type == 'text': # Filtramos mensajes que sean tipo texto.
             cid = m.chat.id # Almacenaremos el ID de la conversación.
             now = datetime.now().strftime("%Y-%m-%d %H:%M")
-            if cid > 0:              
+            if cid > 0:
                 # Si 'cid' es positivo, usaremos 'm.chat.first_name' para el nombre.
                 mensaje = "[" + now + "]: " + str(m.chat.first_name) + "(" + str(cid) + "): " + m.text
-            else:            
+            else:
                 # Si 'cid' es negativo, usaremos 'm.from_user.first_name' para el nombre.
                 mensaje = "[" + now + "]: " + str(m.from_user.first_name) + "(" + str(cid) + "): " + m.text
             f = open( LOGDIR + LOGFILE, 'a') # Abrimos nuestro fichero log en modo 'Añadir'.
