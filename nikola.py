@@ -9,8 +9,9 @@ import time # Librería para hacer que el programa que controla el bot no se aca
 from modules.uptime import uptime_string
 from modules.uptime import logs_size
 
-# Librería de acciones en el sistema
+# Librerías de acciones en el sistema
 import sys
+import subprocess
 
 # Importamos el TOKEN y USERS desde settings
 from settings import TOKEN
@@ -18,9 +19,6 @@ from settings import USERS
 from settings import LOGDIR
 from settings import LOGFILE
 from settings import path
-
-#Modulo EMT VLC
-## from modules.emtVlc import prime_buses
 
 bot = telebot.TeleBot(TOKEN) # Creamos el objeto del bot.
 print("Bot iniciado y listo para servir:")
@@ -38,12 +36,10 @@ def listener(messages):
         if m.content_type == 'text': # Filtramos mensajes que sean tipo texto.
             cid = m.chat.id # Almacenaremos el ID de la conversación.
             now = datetime.now().strftime("%Y-%m-%d %H:%M")
-            if cid > 0:
-                
+            if cid > 0:              
                 # Si 'cid' es positivo, usaremos 'm.chat.first_name' para el nombre.
                 mensaje = "[" + now + "]: " + str(m.chat.first_name) + "(" + str(cid) + "): " + m.text
-            else:
-                
+            else:            
                 # Si 'cid' es negativo, usaremos 'm.from_user.first_name' para el nombre.
                 mensaje = "[" + now + "]: " + str(m.from_user.first_name) + "(" + str(cid) + "): " + m.text
             f = open( LOGDIR + LOGFILE, 'a') # Abrimos nuestro fichero log en modo 'Añadir'.
@@ -107,8 +103,29 @@ def command_logsize(m):
 @bot.message_handler(commands=['stop'])
 def command_stop(m):
     cid = m.chat.id
-    bot.send_message(cid, "One more time, bye!")
-    sys.exit()
+    if not str(cid) in USERS:
+        bot.send_message( cid, "Permiso denegado")
+    else:
+        bot.send_message(cid, "One more time, bye!")
+        sys.exit()
+
+# Reinicia el bot
+@bot.message_handler(commands=['re_bot'])
+def command_rebot(m):
+    chatID = m.chat.id
+    if not str(chatID) in USERS:
+        bot.send_message(chatID, "Permiso denegado")
+    else:
+        bot.send_message(chatID, "Reiniciando . . .")
+        proceso = subprocess.Popen(['./script_rebot'])
+
+        proceso
+        bot.send_chat_action(chatID, "typing")
+        bot.send_message(chatID, "¡Reiniciado!")
+        sys.exit()
+
+
+
 
 
 
