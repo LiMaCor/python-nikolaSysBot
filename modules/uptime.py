@@ -45,5 +45,5 @@ def uptime_string(startup_time_in_seconds, last_error_time):
 ## En proceso de desarrollo##
 def logs_size(PATH):
     # Mensaje = logs_size_str
-    logs_size_str = (subprocess.getoutput("du -hac -d 1"+path+"| egrep 'log|total'"))+" carpeta Bot"
+    logs_size_str = (subprocess.getoutput("du -hac -d 1"+PATH+"| egrep 'log|total'"))+" carpeta Bot"
     return logs_size_str
