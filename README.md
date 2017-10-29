@@ -4,7 +4,7 @@
 
 ### Información
 
-*Pendiente*
+*En construcción*
 
 ### Comandos
 * **/helloworld**: Saluda al mundo

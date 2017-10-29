@@ -1,7 +1,0 @@
-#!/bin/bash
-
-## Script de apoyo para el bot. Se detiene durante 5 segundos e inicia
-## de nuevo el bot.
-
-sleep 5
-python3.4 nikola.py

@@ -60,9 +60,9 @@ def command_start(m):
     cid = m.chat.id
     # Si no esta en la lista de chats permitidos, deniega acceso
     if not str(cid) in USERS:
-        bot.send_message( cid, "Usuario no reconocido. Funciones limitadas.")
+        bot.send_message( cid, "Usuario no autorizado. Funciones limitadas.")
     else:
-        bot.send_message( cid, "Usuario reconocido.")
+        bot.send_message( cid, "Usuario autorizado.")
 
 ## Funcion basica de testeo
 @bot.message_handler(commands=['helloworld']) # comando '/helloworld'
@@ -96,7 +96,7 @@ def command_logsize(m):
         bot.send_message( cid, "Permiso denegado")
     else:
         bot.send_chat_action(cid, "typing")
-        message = logs_size(path)
+        message = logs_size(PATH)
         bot.send_message(cid, message)
 
 # Detiene el bot
@@ -121,7 +121,9 @@ def command_rebot(m):
 
         proceso
         bot.send_chat_action(chatID, "typing")
-        bot.send_message(chatID, "¡Reiniciado!")
+        #reboot_msg = "¡Reiniciado!" + str(os.getpid())
+        reboot_msg = "¡Reiniciado!"
+        bot.send_message(chatID, reboot_msg)
         sys.exit()
 
 
